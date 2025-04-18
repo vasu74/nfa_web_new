@@ -64,7 +64,7 @@ interface NFA {
 
 const navigationMenu = [
   { name: "All", id: "1" },
-  { name: "Approved", id: "5" },
+  { name: "Completed", id: "5" },
   { name: "Pending", id: "6" },
   { name: "Rejected", id: "7" },
 ];
@@ -73,7 +73,7 @@ const baseUrl = import.meta.env.VITE_API_URL;
 
 const getStatusColor = (status: string) => {
   switch (status) {
-    case "Approved":
+    case "Completed":
       return "bg-green-100 text-green-800";
     case "Rejected":
       return "bg-red-100 text-red-800";
@@ -86,7 +86,7 @@ const getStatusColor = (status: string) => {
 
 const getStatusIcon = (status: string) => {
   switch (status) {
-    case "Approved":
+    case "Completed":
       return <FaCheckCircle className="text-green-500" />;
     case "Rejected":
       return <FaTimesCircle className="text-red-500" />;
@@ -184,7 +184,7 @@ export default function InitiatorNfa() {
     const statusMatch = (() => {
       switch (activeTab) {
         case "5":
-          return item.status.toLowerCase() === "approved";
+          return item.status.toLowerCase() === "completed";
         case "6":
           return item.status.toLowerCase() === "pending";
         case "7":

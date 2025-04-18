@@ -79,7 +79,7 @@ export default function SideBar() {
       to: "/approvals",
     },
     {
-      name: "Recommendator",
+      name: "Recommender",
       icon: ScrollText,
       to: "/recommendator",
     },
@@ -92,11 +92,6 @@ export default function SideBar() {
       name: "Users",
       icon: UsersRound,
       to: "/users",
-    },
-    {
-      name: "AddUsers",
-      icon: BadgePlus,
-      to: "/addUser",
     },
   ];
 

@@ -101,7 +101,7 @@ export default function ApprovalNfa() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<string>("1");
   const token = localStorage.getItem("token");
-  const [nfa, setNfa] = useState<NFA[]>([]);
+  const [nfa, setNfa] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
   // New state variables for filters
@@ -124,10 +124,10 @@ export default function ApprovalNfa() {
         },
       });
       if (response.status === 200) {
-        if (Array.isArray(response.data)) {
-          setNfa(response.data);
+        if (Array.isArray(response.data.nfas)) {
+          setNfa(response.data.nfas);
         } else {
-          setNfa([response.data]);
+          setNfa([response.data.nfas]);
         }
       } else {
         setNfa([]);

@@ -11,6 +11,10 @@ import RecommendatorNfa from "./Pages/Recommendator/RecommendatorNfa";
 import RecommendatorNfaScreen from "./Pages/Recommendator/RecommendatorNfaScreen";
 import ApprovalNfa from "./Pages/Approvals/ApprovalNfa";
 import ApprovalNfaScreen from "./Pages/Approvals/ApprovalNfaScreen";
+import AddUser from "./Pages/Users/AddUser";
+
+import Tenants from "./Pages/Users/Tenants";
+import Setting from "./Pages/Setting/Setting";
 
 const routes: RouteObject[] = [
   { path: "/login", element: <AuthLayout /> },
@@ -31,6 +35,9 @@ const routes: RouteObject[] = [
       { path: "recommendator", element: <RecommendatorNfa /> },
       { path: "recommendator/nfa/:id", element: <RecommendatorNfaScreen /> },
       { path: "approvals", element: <ApprovalNfa /> },
+      { path: "addUser", element: <AddUser /> },
+      { path: "users", element: <Tenants /> },
+      { path: "setting", element: <Setting /> },
       { path: "approvals/nfa/:id", element: <ApprovalNfaScreen /> },
     ],
   },

@@ -5,7 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { FileText, Image, Clock, CheckCircle2, XCircle } from "lucide-react";
-
+import { toast } from "react-hot-toast";
 type Approval = {
   id: number;
   nfa_id: number;
@@ -150,6 +150,31 @@ export default function InititatorNfaScreen() {
     }
   };
 
+  const handlePdfDownload = async () => {
+    try {
+      const response = await axios.get(`${baseUrl}/pdf/generate/${id}`, {
+        headers: {
+          Authorization: token,
+        },
+        responseType: "blob",
+      });
+      if (response.status === 200) {
+        const blob = new Blob([response.data], { type: "application/pdf" });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `NFA_${id}.pdf`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      }
+    } catch (error) {
+      console.error(error);
+      setError("Failed to download PDF. Please try again later.");
+      toast.error("Failed to download PDF. Please try again later.");
+    }
+  };
   if (loading) {
     return <div className="p-6">Loading...</div>;
   }
@@ -170,6 +195,11 @@ export default function InititatorNfaScreen() {
           {nfa.details.status === "Pending" && (
             <Button variant="destructive" onClick={handleWithdraw}>
               Withdraw
+            </Button>
+          )}
+          {nfa.details.status === "Completed" && (
+            <Button className="bg-green-500" onClick={handlePdfDownload}>
+              Download Pdf
             </Button>
           )}
         </div>
