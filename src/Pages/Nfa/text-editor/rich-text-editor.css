@@ -1,0 +1,108 @@
+/* Excel-like table styles with darker borders */
+.ProseMirror table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+  margin: 1.5rem 0;
+  overflow: hidden;
+  border: 2px solid #333;
+}
+
+.ProseMirror table td,
+.ProseMirror table th {
+  border: 1px solid #333;
+  padding: 8px 12px;
+  position: relative;
+  min-width: 100px;
+  vertical-align: top;
+}
+
+.ProseMirror table th {
+  background-color: #f0f0f0;
+  font-weight: bold;
+  border-bottom: 2px solid #333;
+}
+
+.ProseMirror table tr:nth-child(even) {
+  background-color: #f8f8f8;
+}
+
+.ProseMirror table.excel-table {
+  border: 2px solid #000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ProseMirror table.excel-table td,
+.ProseMirror table.excel-table th {
+  border: 1px solid #000;
+  padding: 8px 12px;
+  min-width: 80px;
+}
+
+.ProseMirror table.excel-table tr:first-child {
+  background-color: #e6e6e6;
+  font-weight: 500;
+  border-bottom: 2px solid #000;
+}
+
+.ProseMirror table.excel-table tr:first-child td,
+.ProseMirror table.excel-table th {
+  border-bottom: 2px solid #000;
+}
+
+/* Add grid lines between columns */
+.ProseMirror table.excel-table td:not(:last-child),
+.ProseMirror table.excel-table th:not(:last-child) {
+  border-right: 1px solid #000;
+}
+
+/* Add some spacing around tables */
+.ProseMirror table {
+  margin: 1.5rem 0;
+}
+
+/* Style for the table toolbar */
+.table-toolbar {
+  display: flex;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+/* General editor content styles */
+.ProseMirror {
+  min-height: 200px;
+  padding: 16px;
+}
+
+.ProseMirror:focus {
+  outline: none;
+}
+
+.ProseMirror ul,
+.ProseMirror ol {
+  padding-left: 2rem;
+}
+
+.ProseMirror ul li {
+  list-style-type: disc;
+}
+
+.ProseMirror ol li {
+  list-style-type: decimal;
+}
+
+/* Add hover effect to table cells */
+.ProseMirror table.excel-table td:hover,
+.ProseMirror table.excel-table th:hover {
+  background-color: #f0f8ff;
+}
+
+/* Add a subtle grid pattern to the table */
+.ProseMirror table.excel-table {
+  background-color: white;
+  background-image: linear-gradient(#000 1px, transparent 1px),
+    linear-gradient(90deg, #000 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%;
+  background-position: -1px -1px, -1px -1px;
+  background-repeat: no-repeat;
+}
