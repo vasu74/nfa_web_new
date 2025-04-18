@@ -79,6 +79,11 @@ export default function SideBar() {
       to: "/approvals",
     },
     {
+      name: "Recommendator",
+      icon: ScrollText,
+      to: "/recommendator",
+    },
+    {
       name: "Setting",
       icon: Settings,
       to: "/setting",

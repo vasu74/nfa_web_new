@@ -6,6 +6,11 @@ import DemoPage from "./Pages/demoPage";
 import { UserProvider } from "./Provider/UserProvider";
 import AddNfa from "./Pages/Nfa/AddNfa";
 import InitiatorNfa from "./Pages/Nfa/initatiorNfa";
+import InititatorNfaScreen from "./Pages/Nfa/InititatorNfaScreen";
+import RecommendatorNfa from "./Pages/Recommendator/RecommendatorNfa";
+import RecommendatorNfaScreen from "./Pages/Recommendator/RecommendatorNfaScreen";
+import ApprovalNfa from "./Pages/Approvals/ApprovalNfa";
+import ApprovalNfaScreen from "./Pages/Approvals/ApprovalNfaScreen";
 
 const routes: RouteObject[] = [
   { path: "/login", element: <AuthLayout /> },
@@ -22,6 +27,11 @@ const routes: RouteObject[] = [
       { index: true, element: <DemoPage /> },
       { path: "raisenfa", element: <AddNfa /> },
       { path: "mynfa", element: <InitiatorNfa /> },
+      { path: "initiator/nfa/:id", element: <InititatorNfaScreen /> },
+      { path: "recommendator", element: <RecommendatorNfa /> },
+      { path: "recommendator/nfa/:id", element: <RecommendatorNfaScreen /> },
+      { path: "approvals", element: <ApprovalNfa /> },
+      { path: "approvals/nfa/:id", element: <ApprovalNfaScreen /> },
     ],
   },
 ];

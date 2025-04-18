@@ -21,7 +21,7 @@ const ProfilePicture = ({ user }: { user: any }) => (
   <div className="flex gap-2 items-center bg-gray-200 rounded-full py-1 px-5">
     <div className="text-start">
       <span className="text-sm font-semibold text-stone-800 block">
-        {`${user?.first_name} ${user?.last_name}`}
+        {user?.name}
       </span>
       <span className="text-xs block text-stone-500  capitalize">
         {user?.role_name}

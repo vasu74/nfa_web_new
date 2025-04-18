@@ -3,9 +3,12 @@ import { createContext, ReactNode, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 const baseUrl = import.meta.env.VITE_API_URL;
 export type User = {
-  name: string;
+  first_name: string;
+  last_name: string;
   email: string;
   id: number;
+  role_name?: string;
+  profile_picture?: string;
 };
 
 interface UserContextType {

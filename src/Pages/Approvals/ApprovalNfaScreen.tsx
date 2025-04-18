@@ -2,9 +2,18 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { FileText, Image, Clock, CheckCircle2, XCircle } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
 
 type Approval = {
   id: number;
@@ -61,12 +70,20 @@ type NFAData = {
 };
 
 const baseUrl = import.meta.env.VITE_API_URL;
-export default function InititatorNfaScreen() {
+export default function ApprovalNfaScreen() {
+  const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const token = localStorage.getItem("token");
   const [nfa, setNfa] = useState<NFAData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [comment, setComment] = useState("");
+  const [actionError, setActionError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedAction, setSelectedAction] = useState<
+    "approve" | "reject" | null
+  >(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   useEffect(() => {
     fetchNfa();
@@ -79,7 +96,7 @@ export default function InititatorNfaScreen() {
     try {
       const response = await axios.get(`${baseUrl}/nfa/${id}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: token,
         },
       });
       if (response.status === 200) {
@@ -130,24 +147,59 @@ export default function InititatorNfaScreen() {
     return <FileText className="w-5 h-5" />;
   };
 
-  const handleWithdraw = async () => {
+  const handleWithdraw = async (text: string) => {
+    if (!comment.trim()) {
+      setActionError("Please enter a comment before proceeding");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setActionError(null);
+
+    const formatteddata = {
+      nfa_id: id,
+      action: text,
+      comment: comment.trim(),
+    };
+
     try {
-      const response = await axios.post(
-        `${baseUrl}/nfa/${id}/withdraw`,
-        {},
+      const response = await axios.put(
+        `${baseUrl}/reject_approve`,
+        formatteddata,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: token,
           },
         }
       );
+
       if (response.status === 200) {
-        fetchNfa(); // Refresh the data
+        setComment("");
+        setSelectedAction(null);
+        setIsDialogOpen(false);
+        fetchNfa();
+        navigate("/");
       }
     } catch (error) {
       console.error(error);
-      setError("Failed to withdraw NFA. Please try again later.");
+      if (axios.isAxiosError(error)) {
+        setActionError(
+          error.response?.data?.message ||
+            "Failed to process the request. Please try again later."
+        );
+      } else {
+        setActionError("An unexpected error occurred. Please try again later.");
+      }
+    } finally {
+      setIsSubmitting(false);
     }
+  };
+
+  const handleActionClick = (action: "approve" | "reject") => {
+    setSelectedAction(action);
+    setComment("");
+    setActionError(null);
+    setIsDialogOpen(true);
   };
 
   if (loading) {
@@ -168,9 +220,22 @@ export default function InititatorNfaScreen() {
         <div className="flex flex-row items-center justify-between p-4 bg-blue-50 border-b border-blue-100">
           <h1 className="text-xl font-bold text-blue-800">NFA Details</h1>
           {nfa.details.status === "Pending" && (
-            <Button variant="destructive" onClick={handleWithdraw}>
-              Withdraw
-            </Button>
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-row items-center gap-2">
+                <Button
+                  variant="destructive"
+                  onClick={() => handleActionClick("reject")}
+                >
+                  Reject
+                </Button>
+                <Button
+                  className="bg-green-300"
+                  onClick={() => handleActionClick("approve")}
+                >
+                  Approve
+                </Button>
+              </div>
+            </div>
           )}
         </div>
 
@@ -314,6 +379,51 @@ export default function InititatorNfaScreen() {
           </div>
         </div>
       </div>
+
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{selectedAction} NFA</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="comment">Comment</Label>
+              <Input
+                id="comment"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                placeholder={`Enter your comment for ${selectedAction}...`}
+                className="w-full"
+              />
+              {actionError && (
+                <p className="text-sm text-red-500">{actionError}</p>
+              )}
+            </div>
+            <DialogFooter>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setIsDialogOpen(false);
+                  setComment("");
+                  setActionError(null);
+                }}
+                disabled={isSubmitting}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant={
+                  selectedAction === "reject" ? "destructive" : "default"
+                }
+                onClick={() => handleWithdraw(selectedAction!)}
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Processing..." : `Confirm ${selectedAction}`}
+              </Button>
+            </DialogFooter>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
