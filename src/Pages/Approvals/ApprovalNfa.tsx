@@ -165,7 +165,7 @@ export default function ApprovalNfa() {
         {nfa.map((item) => (
           <div
             key={item.nfa_id}
-            onClick={() => navigate(`/recommendator/nfa/${item.nfa_id}`)}
+            onClick={() => navigate(`/approvals/nfa/${item.nfa_id}`)}
             className="bg-white rounded-lg shadow-md p-6 cursor-pointer hover:shadow-lg transition-shadow duration-200 flex flex-col h-full"
           >
             <div className="flex justify-between items-start mb-4">

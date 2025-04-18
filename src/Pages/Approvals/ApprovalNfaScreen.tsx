@@ -214,6 +214,8 @@ export default function ApprovalNfaScreen() {
     return <div className="p-6 text-red-500">No NFA data found</div>;
   }
 
+  console.log(nfa.details.status);
+
   return (
     <div className="">
       <div className="bg-white ">
