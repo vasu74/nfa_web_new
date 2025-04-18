@@ -136,7 +136,11 @@ export default function InitiatorNfa() {
           setNfa([response.data]);
         }
       } else {
-        setNfa([]);
+        if (response.status === 204) {
+          setNfa([]);
+        } else {
+          setNfa([]);
+        }
       }
     } catch {
       console.log("error");

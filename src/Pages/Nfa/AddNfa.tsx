@@ -370,6 +370,8 @@ export default function AddNfa({
     }
   };
 
+  const token = localStorage.getItem("token");
+
   useEffect(() => {
     fetchDepartment();
   }, []);
@@ -402,7 +404,8 @@ export default function AddNfa({
       // (Assuming the NFA creation endpoint is `${baseUrl}/nfa`)
       const nfaResponse = await axios.post(
         `${baseUrl}/nfa/create`,
-        finalPayload
+        finalPayload,
+        { headers: { Authorization: token } }
       );
       if (nfaResponse.status === 201) {
         alert("NFA created successfully");

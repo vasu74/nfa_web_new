@@ -157,7 +157,7 @@ export default function RecommendatorNfaScreen() {
     setActionError(null);
 
     const formatteddata = {
-      nfa_id: id,
+      nfa_id: Number(id),
       action: text,
       comment: comment.trim(),
     };
