@@ -219,7 +219,7 @@ export default function ApprovalNfaScreen() {
       <div className="bg-white ">
         <div className="flex flex-row items-center justify-between p-4 bg-blue-50 border-b border-blue-100">
           <h1 className="text-xl font-bold text-blue-800">NFA Details</h1>
-          {nfa.details.status === "Pending" && (
+          {nfa.details.status === "Initiated" && (
             <div className="flex flex-col gap-4">
               <div className="flex flex-row items-center gap-2">
                 <Button
@@ -229,7 +229,7 @@ export default function ApprovalNfaScreen() {
                   Reject
                 </Button>
                 <Button
-                  className="bg-green-300"
+                  className="bg-green-600"
                   onClick={() => handleActionClick("approve")}
                 >
                   Approve
