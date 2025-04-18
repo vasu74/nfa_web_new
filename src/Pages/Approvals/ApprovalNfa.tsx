@@ -118,7 +118,7 @@ export default function ApprovalNfa() {
   const fetchNfa = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`${baseUrl}/nfa/pending_approvals`, {
+      const response = await axios.get(`${baseUrl}/pending_approvals`, {
         headers: {
           Authorization: token,
         },
