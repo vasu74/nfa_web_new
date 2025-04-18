@@ -684,13 +684,13 @@ export default function AddNfa({
 
             {/* Last Recommender selection */}
             <div className="space-y-2">
-              <Label className="text-gray-700">Select Last Recommender</Label>
+              <Label className="text-gray-700">Select Final Approver</Label>
               <Select
                 onValueChange={handleLastrecommander}
                 value={selectedLastrecommender}
               >
                 <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select a Last Recommender" />
+                  <SelectValue placeholder="Select a Final Approver" />
                 </SelectTrigger>
                 <SelectContent>
                   <div className="p-2">
