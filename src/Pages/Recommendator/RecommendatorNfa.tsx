@@ -124,10 +124,10 @@ export default function RecommendatorNfa() {
         },
       });
       if (response.status === 200) {
-        if (Array.isArray(response.data)) {
-          setNfa(response.data);
+        if (Array.isArray(response.data.nfas)) {
+          setNfa(response.data.nfas);
         } else {
-          setNfa([response.data]);
+          setNfa([response.data.nfas]);
         }
       } else {
         setNfa([]);

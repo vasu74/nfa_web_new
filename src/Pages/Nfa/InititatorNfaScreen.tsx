@@ -137,7 +137,7 @@ export default function InititatorNfaScreen() {
         {},
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: token,
           },
         }
       );

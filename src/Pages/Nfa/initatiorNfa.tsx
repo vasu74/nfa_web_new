@@ -30,13 +30,6 @@ interface FileAttachment {
   file_name: string;
 }
 
-interface TabLink {
-  id: string;
-  name: string;
-  number?: number;
-  icon: React.ElementType;
-}
-
 interface NFA {
   nfa_id: number;
   status: string;
@@ -60,6 +53,13 @@ interface NFA {
   tower_name: string;
   area_name: string;
   department_name: string;
+}
+
+interface TabLink {
+  id: string;
+  name: string;
+  number?: number;
+  icon: React.ElementType;
 }
 
 const navigationMenu = [
