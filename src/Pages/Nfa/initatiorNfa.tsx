@@ -21,6 +21,8 @@ interface Approval {
   status: string;
   comments: string;
   approver_name: string;
+  started_at: string;
+  updated_at: string;
 }
 
 interface FileAttachment {
@@ -133,7 +135,7 @@ export default function InitiatorNfa() {
         if (Array.isArray(response.data)) {
           setNfa(response.data);
         } else {
-          setNfa([response.data]);
+          setNfa(response.data);
         }
       } else {
         if (response.status === 204) {
@@ -375,7 +377,7 @@ export default function InitiatorNfa() {
               </div>
               <div className="flex items-center text-sm text-gray-600">
                 <FaFile className="mr-2" />
-                <span>Files: {item.files.length}</span>
+                <span>Files: {item.files?.length || 0}</span>
               </div>
 
               <div className="flex items-center text-sm text-gray-600">
