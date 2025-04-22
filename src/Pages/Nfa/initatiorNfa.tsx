@@ -363,10 +363,13 @@ export default function InitiatorNfa() {
               </div>
               <div
                 className={`px-3 py-1 rounded-full text-sm font-medium flex items-center gap-2 flex-shrink-0 ${getStatusColor(
-                  item.status
+                  item.status === "Initiated" ? "Pending" : item.status
                 )}`}
               >
-                {getStatusIcon(item.status)} {item.status}
+                {getStatusIcon(
+                  item.status === "Initiated" ? "Pending" : item.status
+                )}
+                {item.status === "Initiated" ? "Pending" : item.status}
               </div>
             </div>
 

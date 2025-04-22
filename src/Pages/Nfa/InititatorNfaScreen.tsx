@@ -6,27 +6,27 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { FileText, Image, Clock, CheckCircle2, XCircle } from "lucide-react";
 import { toast } from "react-hot-toast";
-type Approval = {
+interface Approval {
   id: number;
   nfa_id: number;
   approver_id: number;
   order_value: number;
   status: string;
   comments: string;
-  started_at: string; // ISO timestamp
-  completed_at: string; // ISO timestamp
+  started_at: string;
+  updated_at: string;
   approver_name: string;
   approver_email: string;
-};
+}
 
-type File = {
+interface FileAttachment {
   id: number;
   nfa_id: number;
   file_path: string;
   file_name: string;
-};
+}
 
-type Details = {
+interface Details {
   nfa_id: number;
   project_id: number;
   tower_id: number;
@@ -38,10 +38,12 @@ type Details = {
   reference: string;
   recommender: number;
   last_recommender: number;
-  initiator_id: number;
-  approvals: Approval[] | null;
-  files: File[] | null;
   status: string;
+  started_at: string;
+  completed_at: string;
+  initiator_id: number;
+  approvals: any; // can be changed if you later include detailed nested approvals
+  files: any; // same here
   initiator_name: string;
   initiator_email: string;
   recommender_name: string;
@@ -52,13 +54,14 @@ type Details = {
   tower_name: string;
   area_name: string;
   department_name: string;
-};
+  approver_status: string;
+}
 
-type NFAData = {
+interface NFAData {
   approvals: Approval[];
   details: Details;
-  files: File[];
-};
+  files: FileAttachment[];
+}
 
 const baseUrl = import.meta.env.VITE_API_URL;
 export default function InititatorNfaScreen() {
@@ -79,7 +82,7 @@ export default function InititatorNfaScreen() {
     try {
       const response = await axios.get(`${baseUrl}/nfa/${id}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: token,
         },
       });
       if (response.status === 200) {

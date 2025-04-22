@@ -117,6 +117,8 @@ export default function ApprovalNfa() {
   const [nfa, setNfa] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
+  
+
   // New state variables for filters
   const [showFilters, setShowFilters] = useState(false);
   const [filters, setFilters] = useState({
