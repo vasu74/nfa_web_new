@@ -30,6 +30,7 @@ const schmea = z.object({
   department_id: z.number().min(1, "enter the department"),
   role_id: z.number().min(1, "enter the role"),
   address: z.string().min(1, "enter the address"),
+  designation: z.string().min(1, "enter the designation"),
 });
 type FormFields = z.infer<typeof schmea>;
 
@@ -49,7 +50,10 @@ interface AddProjectProps {
   initialemail?: string;
   initialpassword?: string;
   initialphone_no?: string;
+  initialdesignation?: string;
   DepartmentId?: string;
+
+  designation?: string;
   //   onSuccess: () => void;
 }
 
@@ -59,6 +63,7 @@ export default function AddUser({
   initialName = "",
   initialpassword = "",
   initialphone_no = "",
+  initialdesignation = "",
   DepartmentId,
 }: AddProjectProps) {
   const navigate = useNavigate();
@@ -260,6 +265,21 @@ export default function AddUser({
               {errors.password && (
                 <p className="text-red-500 text-sm mt-1">
                   {errors.password.message}
+                </p>
+              )}
+            </div>
+
+            {/* designation input  */}
+            <div className="flex flex-col gap-1">
+              <Label>Designation</Label>
+              <Input
+                {...register("designation")}
+                type="text"
+                placeholder="Enter designation"
+              />
+              {errors.designation && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.designation.message}
                 </p>
               )}
             </div>
