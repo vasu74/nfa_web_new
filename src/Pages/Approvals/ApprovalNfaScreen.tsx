@@ -15,27 +15,27 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 
-type Approval = {
+export interface Approval {
   id: number;
   nfa_id: number;
   approver_id: number;
   order_value: number;
   status: string;
   comments: string;
-  started_at: string; // ISO timestamp
-  completed_at: string; // ISO timestamp
+  started_at: string;
+  updated_at: string;
   approver_name: string;
   approver_email: string;
-};
+}
 
-type File = {
+export interface File {
   id: number;
   nfa_id: number;
   file_path: string;
   file_name: string;
-};
+}
 
-type Details = {
+export interface NFADetails {
   nfa_id: number;
   project_id: number;
   tower_id: number;
@@ -47,10 +47,12 @@ type Details = {
   reference: string;
   recommender: number;
   last_recommender: number;
+  status: string;
+  started_at: string;
+  completed_at: string;
   initiator_id: number;
   approvals: Approval[] | null;
   files: File[] | null;
-  status: string;
   initiator_name: string;
   initiator_email: string;
   recommender_name: string;
@@ -61,13 +63,14 @@ type Details = {
   tower_name: string;
   area_name: string;
   department_name: string;
-};
+  approver_status: string;
+}
 
-type NFAData = {
+export interface NFAData {
   approvals: Approval[];
-  details: Details;
+  details: NFADetails;
   files: File[];
-};
+}
 
 const baseUrl = import.meta.env.VITE_API_URL;
 export default function ApprovalNfaScreen() {
@@ -221,7 +224,7 @@ export default function ApprovalNfaScreen() {
       <div className="bg-white ">
         <div className="flex flex-row items-center justify-between p-4 bg-blue-50 border-b border-blue-100">
           <h1 className="text-xl font-bold text-blue-800">NFA Details</h1>
-          {nfa.details.status === "Initiated" && (
+          {nfa.details.approver_status === "Pending" && (
             <div className="flex flex-col gap-4">
               <div className="flex flex-row items-center gap-2">
                 <Button

@@ -4,13 +4,9 @@ import {
   Signature,
   Settings,
   House,
-  BadgePlus,
   UsersRound,
   ScrollText,
   Loader2,
-  CornerDownLeft,
-  ChevronLeft,
-  ChevronRight,
   Cuboid,
   ArrowLeft,
   ArrowRight,
@@ -18,12 +14,6 @@ import {
 
 import { useContext, useEffect, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 
 interface NavItemType {
   name: string;
@@ -77,11 +67,6 @@ export default function SideBar() {
       name: "Approvals",
       icon: Signature,
       to: "/approvals",
-    },
-    {
-      name: "Recommender",
-      icon: ScrollText,
-      to: "/recommendator",
     },
     {
       name: "Setting",

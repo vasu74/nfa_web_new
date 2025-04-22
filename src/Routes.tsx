@@ -32,8 +32,6 @@ const routes: RouteObject[] = [
       { path: "raisenfa", element: <AddNfa /> },
       { path: "mynfa", element: <InitiatorNfa /> },
       { path: "initiator/nfa/:id", element: <InititatorNfaScreen /> },
-      { path: "recommendator", element: <RecommendatorNfa /> },
-      { path: "recommendator/nfa/:id", element: <RecommendatorNfaScreen /> },
       { path: "approvals", element: <ApprovalNfa /> },
       { path: "addUser", element: <AddUser /> },
       { path: "users", element: <Tenants /> },

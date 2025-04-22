@@ -12,8 +12,44 @@ import {
   FaFilter,
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+export interface NFAResponse {
+  message: string;
+  nfas: NFA[];
+}
 
-interface Approval {
+export interface NFA {
+  nfa_id: number;
+  project_id: number;
+  tower_id: number;
+  area_id: number;
+  department_id: number;
+  priority: string;
+  subject: string;
+  description: string;
+  reference: string;
+  recommender: number;
+  last_recommender: number;
+  status: string;
+  completed_at: string;
+  initiator_id: number;
+  approvals: Approval[];
+  files: FileAttachment[];
+  initiator_name: string;
+  recommender_name: string;
+  last_recommender_name: string;
+  project_name: string;
+  tower_name: string;
+  area_name: string;
+  department_name: string;
+  is_recommender: boolean;
+  is_approver: boolean;
+  approval_status?: string; // optional: may not be present on all NFAs
+  order_value: number;
+  started_at?: string; // optional
+  user_status: string;
+}
+
+export interface Approval {
   id: number;
   nfa_id: number;
   approver_id: number;
@@ -21,9 +57,11 @@ interface Approval {
   status: string;
   comments: string;
   approver_name: string;
+  started_at: string;
+  updated_at: string;
 }
 
-interface FileAttachment {
+export interface FileAttachment {
   id: number;
   nfa_id: number;
   file_path: string;
@@ -35,31 +73,6 @@ interface TabLink {
   name: string;
   number?: number;
   icon: React.ElementType;
-}
-
-interface NFA {
-  nfa_id: number;
-  status: string;
-  project_id: number;
-  tower_id: number;
-  area_id: number;
-  department_id: number;
-  priority: string;
-  subject: string;
-  description: string;
-  reference: string;
-  recommender: number;
-  last_recommender: number;
-  initiator_id: number;
-  approvals: Approval[];
-  files: FileAttachment[];
-  initiator_name: string;
-  recommender_name: string;
-  last_recommender_name: string;
-  project_name: string;
-  tower_name: string;
-  area_name: string;
-  department_name: string;
 }
 
 const navigationMenu = [
@@ -118,7 +131,7 @@ export default function ApprovalNfa() {
   const fetchNfa = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`${baseUrl}/pending_approvals`, {
+      const response = await axios.get(`${baseUrl}/all_user_nfas`, {
         headers: {
           Authorization: token,
         },
@@ -177,10 +190,10 @@ export default function ApprovalNfa() {
               </div>
               <div
                 className={`px-3 py-1 rounded-full text-sm font-medium flex items-center gap-2 flex-shrink-0 ${getStatusColor(
-                  item.status
+                  item.approval_status
                 )}`}
               >
-                {getStatusIcon(item.status)} {item.status}
+                {getStatusIcon(item.approval_status)} {item.approval_status}
               </div>
             </div>
 
