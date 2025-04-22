@@ -14,6 +14,7 @@ import {
   DialogTitle,
   DialogFooter,
 } from "@/components/ui/dialog";
+import { toast } from "react-hot-toast";
 
 export interface Approval {
   id: number;
@@ -198,6 +199,32 @@ export default function ApprovalNfaScreen() {
     }
   };
 
+  const handlePdfDownload = async () => {
+    try {
+      const response = await axios.get(`${baseUrl}/pdf/generate/${id}`, {
+        headers: {
+          Authorization: token,
+        },
+        responseType: "blob",
+      });
+      if (response.status === 200) {
+        const blob = new Blob([response.data], { type: "application/pdf" });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `NFA_${id}.pdf`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      }
+    } catch (error) {
+      console.error(error);
+      setError("Failed to download PDF. Please try again later.");
+      toast.error("Failed to download PDF. Please try again later.");
+    }
+  };
+
   const handleActionClick = (action: "approve" | "reject") => {
     setSelectedAction(action);
     setComment("");
@@ -238,6 +265,15 @@ export default function ApprovalNfaScreen() {
                   onClick={() => handleActionClick("approve")}
                 >
                   Approve
+                </Button>
+              </div>
+            </div>
+          )}
+          {nfa.details.status === "Completed" && (
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-row items-center gap-2">
+                <Button className="bg-green-500" onClick={handlePdfDownload}>
+                  Download Nfa
                 </Button>
               </div>
             </div>
@@ -388,7 +424,9 @@ export default function ApprovalNfaScreen() {
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{selectedAction} NFA</DialogTitle>
+            <DialogTitle className="capitalize">
+              {selectedAction} NFA
+            </DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
             <div className="space-y-2">
@@ -422,6 +460,7 @@ export default function ApprovalNfaScreen() {
                 }
                 onClick={() => handleWithdraw(selectedAction!)}
                 disabled={isSubmitting}
+               
               >
                 {isSubmitting ? "Processing..." : `Confirm ${selectedAction}`}
               </Button>

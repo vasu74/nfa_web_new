@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { FileText, Image, Clock, CheckCircle2, XCircle } from "lucide-react";
 import { toast } from "react-hot-toast";
+
 interface Approval {
   id: number;
   nfa_id: number;
@@ -64,6 +65,25 @@ interface NFAData {
 }
 
 const baseUrl = import.meta.env.VITE_API_URL;
+
+const formatDate = (dateString: string | null | undefined) => {
+  if (!dateString) return "Not available";
+  try {
+    const date = new Date(dateString);
+    return date.toLocaleString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: true,
+    });
+  } catch (error) {
+    return "Invalid date";
+  }
+};
+
 export default function InititatorNfaScreen() {
   const { id } = useParams<{ id: string }>();
   const token = localStorage.getItem("token");
@@ -302,16 +322,20 @@ export default function InititatorNfaScreen() {
                   </div>
                   <div className="mt-2 space-y-1">
                     <p className="text-sm text-gray-600">
-                      Order: {approval.order_value}
+                      Started At: {formatDate(approval.started_at)}
                     </p>
+                    <p className="text-sm text-gray-600">
+                      Updated At: {formatDate(approval.updated_at)}
+                    </p>
+
                     {approval.comments && (
-                      <div className="mt-1">
-                        <p className="text-sm font-medium text-gray-600">
+                      <div className="mt-2">
+                        <p className="text-sm font-medium text-gray-600 mb-1">
                           Comments:
                         </p>
-                        <p className="text-sm text-gray-800">
+                        <div className="text-sm text-gray-800 whitespace-pre-wrap bg-white/50 rounded p-2">
                           {approval.comments}
-                        </p>
+                        </div>
                       </div>
                     )}
                   </div>
