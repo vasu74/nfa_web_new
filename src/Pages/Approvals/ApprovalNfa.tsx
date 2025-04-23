@@ -117,8 +117,6 @@ export default function ApprovalNfa() {
   const [nfa, setNfa] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
-  
-
   // New state variables for filters
   const [showFilters, setShowFilters] = useState(false);
   const [filters, setFilters] = useState({
@@ -206,7 +204,7 @@ export default function ApprovalNfa() {
               </div>
               <div className="flex items-center text-sm text-gray-600">
                 <FaFile className="mr-2" />
-                <span>Files: {item.files.length}</span>
+                <span>Files: {item.files ? item.files.length : 0}</span>
               </div>
 
               <div className="flex items-center text-sm text-gray-600">
