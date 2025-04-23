@@ -360,36 +360,40 @@ export default function ApprovalNfaScreen() {
               Approvals
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-              {nfa.approvals.map((approval) => (
-                <div
-                  key={approval.id}
-                  className={`border rounded-lg p-3 ${getStatusColor(
-                    approval.status
-                  )}`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="font-medium text-gray-800">
-                      {approval.approver_name}
-                    </div>
-                    {getStatusIcon(approval.status)}
-                  </div>
-                  <div className="mt-2 space-y-1">
-                    <p className="text-sm text-gray-600">
-                      Order: {approval.order_value}
-                    </p>
-                    {approval.comments && (
-                      <div className="mt-1">
-                        <p className="text-sm font-medium text-gray-600">
-                          Comments:
-                        </p>
-                        <p className="text-sm text-gray-800">
-                          {approval.comments}
-                        </p>
+              {nfa.approvals && nfa.approvals.length > 0 ? (
+                nfa.approvals.map((approval) => (
+                  <div
+                    key={approval.id}
+                    className={`border rounded-lg p-3 ${getStatusColor(
+                      approval.status
+                    )}`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="font-medium text-gray-800">
+                        {approval.approver_name}
                       </div>
-                    )}
+                      {getStatusIcon(approval.status)}
+                    </div>
+                    <div className="mt-2 space-y-1">
+                      <p className="text-sm text-gray-600">
+                        Order: {approval.order_value}
+                      </p>
+                      {approval.comments && (
+                        <div className="mt-1">
+                          <p className="text-sm font-medium text-gray-600">
+                            Comments:
+                          </p>
+                          <p className="text-sm text-gray-800">
+                            {approval.comments}
+                          </p>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))
+              ) : (
+                <p className="text-gray-500">No approvals found</p>
+              )}
             </div>
           </div>
 
@@ -400,22 +404,26 @@ export default function ApprovalNfaScreen() {
               Attachments
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-              {nfa.files.map((file) => (
-                <div
-                  key={file.id}
-                  className="border rounded-lg p-3 hover:bg-blue-50 transition-colors"
-                >
-                  <a
-                    href={`https://nfa.blueinvent.com/api/get_file?file=${file.file_name}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-gray-800 hover:text-blue-600"
+              {nfa.files && nfa.files.length > 0 ? (
+                nfa.files.map((file) => (
+                  <div
+                    key={file.id}
+                    className="border rounded-lg p-3 hover:bg-blue-50 transition-colors"
                   >
-                    {getFileIcon(file.file_name)}
-                    <span className="text-sm truncate">{file.file_name}</span>
-                  </a>
-                </div>
-              ))}
+                    <a
+                      href={`https://nfa.blueinvent.com/api/get_file?file=${file.file_name}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-gray-800 hover:text-blue-600"
+                    >
+                      {getFileIcon(file.file_name)}
+                      <span className="text-sm truncate">{file.file_name}</span>
+                    </a>
+                  </div>
+                ))
+              ) : (
+                <p className="text-gray-500">No attachments found</p>
+              )}
             </div>
           </div>
         </div>
@@ -460,7 +468,6 @@ export default function ApprovalNfaScreen() {
                 }
                 onClick={() => handleWithdraw(selectedAction!)}
                 disabled={isSubmitting}
-               
               >
                 {isSubmitting ? "Processing..." : `Confirm ${selectedAction}`}
               </Button>
