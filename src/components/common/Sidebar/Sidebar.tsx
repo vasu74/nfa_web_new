@@ -11,6 +11,7 @@ import {
   ArrowLeft,
   ArrowRight,
 } from "lucide-react";
+import logo from "@/assets/image_2025_02_18T15_14_58_472Z.png";
 
 import { useContext, useEffect, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
@@ -52,11 +53,10 @@ export default function SideBar() {
   const navigate = useNavigate();
 
   const menuItem: NavItemType[] = [
-    { name: "Dashboard", icon: House, to: "/" },
     {
       name: "My NFA",
       icon: ScrollText,
-      to: "/mynfa",
+      to: "/",
     },
     {
       name: "Raise NFA",
@@ -125,24 +125,31 @@ export default function SideBar() {
 
   return (
     <div
-      className={`hidden md:flex flex-col h-screen transition-all ease-in-out duration-300 bg-white border-r border-gray-100 ${
+      className={`hidden md:flex flex-col h-screen transition-all ease-in-out duration-300 bg-white ${
         isCollapsed ? "w-16" : "w-64"
       }`}
     >
       {/* Logo Section */}
-      <div className="h-16 border-b border-gray-100 px-4">
-        <Link to="/" className="flex items-center gap-2 h-full">
-          <Cuboid
-            className={`${isCollapsed ? "w-6 h-6" : "w-7 h-7"} text-blue-600`}
-          />
-          {!isCollapsed && (
-            <span className="text-xl font-bold text-gray-900">Jaypee</span>
+      <div className="h-16 px-4 mb-4 w-full ">
+        <Link to="/" className="flex items-center h-full">
+          {isCollapsed ? (
+            <Cuboid className="w-6 h-6 text-blue-600" />
+          ) : (
+            <img
+              src={logo}
+              alt="Jaypee Infratech"
+              className="w-full h-full object-cover flex items-center justify-center"
+              style={{
+                maxWidth: "180px",
+                filter: "drop-shadow(0px 1px 1px rgba(0,0,0,0.1))",
+              }}
+            />
           )}
         </Link>
       </div>
 
       {/* Navigation Menu */}
-      <nav className="h-[calc(100vh-8rem)] overflow-y-auto py-4">
+      <nav className="h-[calc(100vh-8rem)] overflow-y-auto py-2">
         <ul className="space-y-1 px-2">
           {menuItem.map((item) => {
             const Icon = item.icon;
@@ -153,13 +160,13 @@ export default function SideBar() {
                 <NavLink
                   to={item.to || "#"}
                   className={`
-                    flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium
+                    flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium
                     transition-colors duration-200
                     ${isCollapsed ? "justify-center px-2" : ""}
                     ${
                       isActive
-                        ? "bg-blue-50 text-blue-600"
-                        : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                        ? "bg-[#EEF2FF] text-[#3B82F6]"
+                        : "text-gray-600 hover:bg-gray-50"
                     }
                   `}
                 >
@@ -177,18 +184,14 @@ export default function SideBar() {
       </nav>
 
       {/* Collapse Button */}
-      <div className="h-24 px-4 py-6 border-t border-gray-100">
+      <div className="h-16 px-4 mt-auto">
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
           className={`
-            flex items-center justify-center gap-2 w-full py-2.5 rounded-md 
+            flex items-center justify-center gap-2 w-full py-2.5 rounded-lg 
             transition-colors duration-200
             ${isCollapsed ? "px-2" : ""}
-            ${
-              isCollapsed
-                ? "bg-gray-50 hover:bg-gray-100"
-                : "bg-gray-50 hover:bg-gray-100"
-            } 
+            hover:bg-gray-50
             text-gray-600 hover:text-gray-900
           `}
         >

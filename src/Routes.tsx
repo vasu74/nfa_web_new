@@ -28,9 +28,8 @@ const routes: RouteObject[] = [
       </PrivateRoute>
     ),
     children: [
-      { index: true, element: <DemoPage /> },
+      { index: true, element: <InitiatorNfa /> },
       { path: "raisenfa", element: <AddNfa /> },
-      { path: "mynfa", element: <InitiatorNfa /> },
       { path: "initiator/nfa/:id", element: <InititatorNfaScreen /> },
       { path: "approvals", element: <ApprovalNfa /> },
       { path: "addUser", element: <AddUser /> },
