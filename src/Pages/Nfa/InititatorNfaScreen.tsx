@@ -162,7 +162,7 @@ export default function InititatorNfaScreen() {
           headers: {
             Authorization: token,
           },
-        }
+        },
       );
       if (response.status === 200) {
         fetchNfa(); // Refresh the data
@@ -311,7 +311,7 @@ export default function InititatorNfaScreen() {
                 <div
                   key={approval.id}
                   className={`border rounded-lg p-3 ${getStatusColor(
-                    approval.status
+                    approval.status,
                   )}`}
                 >
                   <div className="flex items-center justify-between">
@@ -350,24 +350,29 @@ export default function InititatorNfaScreen() {
             <h2 className="text-base font-semibold mb-3 text-blue-700">
               Attachments
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-              {nfa.files.map((file) => (
-                <div
-                  key={file.id}
-                  className="border rounded-lg p-3 hover:bg-blue-50 transition-colors"
-                >
-                  <a
-                    href={`https://nfa.blueinvent.com/api/get_file?file=${file.file_name}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-gray-800 hover:text-blue-600"
+            {/* here files can be null or undefined */}
+            {nfa.files && nfa.files.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                {nfa.files.map((file) => (
+                  <div
+                    key={file.id}
+                    className="border rounded-lg p-3 hover:bg-blue-50 transition-colors"
                   >
-                    {getFileIcon(file.file_name)}
-                    <span className="text-sm truncate">{file.file_name}</span>
-                  </a>
-                </div>
-              ))}
-            </div>
+                    <a
+                      href={`https://nfa.blueinvent.com/api/get_file?file=${file.file_name}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-gray-800 hover:text-blue-600"
+                    >
+                      {getFileIcon(file.file_name)}
+                      <span className="text-sm truncate">{file.file_name}</span>
+                    </a>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-500">No attachments found</p>
+            )}
           </div>
         </div>
       </div>

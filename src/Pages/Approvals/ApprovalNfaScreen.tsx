@@ -382,7 +382,7 @@ export default function ApprovalNfaScreen() {
                         <div className="mt-1">
                           <p className="text-sm font-medium text-gray-600">
                             Comments:
-                          </p>
+                          </p> 
                           <p className="text-sm text-gray-800">
                             {approval.comments}
                           </p>
